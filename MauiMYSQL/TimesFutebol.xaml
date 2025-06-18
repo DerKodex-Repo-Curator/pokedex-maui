@@ -2,37 +2,61 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiMYSQL.TimesFutebol"
-             Title="Alunos">
-    <VerticalStackLayout>
-        <Label 
-            Text="TIMES DE FUTEBOL"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+             Title="Pokédex">
 
-        <Label Text="Nome do Time" />
-        <Entry x:Name="txtTimeFutebol" Keyboard="Text" />
+    <Grid RowDefinitions="Auto, *, Auto" 
+          Padding="15" 
+          RowSpacing="10">
 
-        <Button Text="Adicionar Time" Clicked="btnAdicionar" />
+        <VerticalStackLayout Grid.Row="0" Spacing="5">
+            <Label 
+                Text="CADASTRO DE POKÉMON"
+                FontSize="22"
+                FontAttributes="Bold"
+                HorizontalOptions="Center" />
+
+            <Label Text="Nome" />
+            <Entry x:Name="txtNome" Keyboard="Text" Placeholder="Ex: Pikachu" />
+
+            <Label Text="Tipo" />
+            <Entry x:Name="txtTipo" Keyboard="Text" Placeholder="Ex: Elétrico" />
+
+            <Label Text="Level" />
+            <Entry x:Name="txtLevel" Keyboard="Numeric" Placeholder="Ex: 25" />
+
+            <Label Text="Ataque" />
+            <Entry x:Name="txtAtaque" Keyboard="Numeric" Placeholder="Ex: 55" />
+
+            <Label Text="Defesa" />
+            <Entry x:Name="txtDefesa" Keyboard="Numeric" Placeholder="Ex: 40" />
+
+            <Button Text="Salvar Pokémon" Clicked="btnAdicionar" Margin="0,10,0,0" />
+        </VerticalStackLayout>
 
         <ListView x:Name="lstTimesFutebol" 
-                  HasUnevenRows="True"
-                  VerticalOptions="FillAndExpand">
+                  Grid.Row="1"
+                  HasUnevenRows="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout>
+                        <StackLayout Padding="10" Spacing="4">
                             <Label Text="{Binding nome}" 
                                    FontSize="Medium" 
-                                   HorizontalOptions="Start" /> 
-                        </StackLayout>        
+                                   FontAttributes="Bold"/>
+                            <Label Text="{Binding tipo, StringFormat='Tipo: {0}'}" />
+                            <Label Text="{Binding level, StringFormat='Level: {0}'}" />
+                            <Label Text="{Binding ataque, StringFormat='Ataque: {0}'}" />
+                            <Label Text="{Binding defesa, StringFormat='Defesa: {0}'}" />
+                        </StackLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
-
         </ListView>
 
-        <Label Text="" x:Name="lblStatus" VerticalOptions="End" HorizontalTextAlignment="Center" />
+        <Label x:Name="lblStatus" 
+               Grid.Row="2"
+               Text="" 
+               HorizontalTextAlignment="Center" />
 
-
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

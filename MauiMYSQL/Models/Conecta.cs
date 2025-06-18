@@ -26,11 +26,11 @@ namespace MauiMYSQL.Models
             //StrCon = "host=192.168.1.250;port=3306;user=fukuta;password=#abc123456;";
             MySqlConnectionStringBuilder StrCon = new MySqlConnectionStringBuilder();
 
-            StrCon.Server = "192.168.1.240"; // conexao interna na rede
+            StrCon.Server = "172.178.8.95"; // conexao interna na rede
             StrCon.Port = 3306;
-            StrCon.UserID = "fukuta";
-            StrCon.Password = "fpc250272#";
-            StrCon.Database = "campeonato_futebol";
+            StrCon.UserID = "rafael";
+            StrCon.Password = "123";
+            StrCon.Database = "MINHA_API";
 
             Conn = new MySqlConnection(StrCon.ToString());
             bool ret = false;

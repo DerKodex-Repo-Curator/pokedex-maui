@@ -10,32 +10,36 @@ using MySqlConnector;
 
 namespace MauiMYSQL.Models
 {
+    // O NOME DA CLASSE FOI MANTIDO COMO "Times"
     public class Times : Conecta
     {
-
         public int id { get; set; }
         public string nome { get; set; }
-        public string sigla { get; set; }
-        public string escudo_url { get; set; }
+        public string tipo { get; set; }
+        public int level { get; set; }
+        public int ataque { get; set; }
+        public int defesa { get; set; }
+
 
         public List<Times> listaTimes = new List<Times>();
 
         public Times() { }
 
-        public bool Times_Add(string nome, string sigla, string escudo_url)
+        public bool Times_Add(string nome, string tipo, int level, int ataque, int defesa)
         {
-
             if (!Conexao())
             {
                 return false;
             }
 
-
-            StrQuery = "INSERT INTO times (nome, sigla, escudo_url) VALUES (@nome, @sigla, @esculdo_url)";
+            StrQuery = "INSERT INTO pokemon (nome, tipo, level, ataque, defesa) VALUES (@nome, @tipo, @level, @ataque, @defesa)";
             Cmd = new MySqlCommand(StrQuery, Conn);
+
             Cmd.Parameters.AddWithValue("@nome", nome);
-            Cmd.Parameters.AddWithValue("@sigla", sigla);
-            Cmd.Parameters.AddWithValue("@esculdo_url", escudo_url);
+            Cmd.Parameters.AddWithValue("@tipo", tipo);
+            Cmd.Parameters.AddWithValue("@level", level);
+            Cmd.Parameters.AddWithValue("@ataque", ataque);
+            Cmd.Parameters.AddWithValue("@defesa", defesa);
             try
             {
                 Cmd.ExecuteNonQuery();
@@ -48,8 +52,6 @@ namespace MauiMYSQL.Models
             }
         }
 
-        // retornar os times cadastrados no banco de dados em uma lista
-
         public bool Times_Consulta()
         {
             if (!Conexao())
@@ -57,33 +59,25 @@ namespace MauiMYSQL.Models
                 return false;
             }
 
-            StrQuery = "SELECT * FROM times order by nome";
+            StrQuery = "SELECT * FROM pokemon order by nome";
             MySqlCommand cmd = new MySqlCommand(StrQuery, Conn);
             cmd.CommandType = System.Data.CommandType.Text;
             Dr = cmd.ExecuteReader();
             listaTimes.Clear();
             while (Dr.Read())
             {
-                    listaTimes.Add(new Times { id = int.Parse(Dr["id"].ToString()), 
-                                               nome = Dr["nome"].ToString(), 
-                                               sigla = Dr["sigla"].ToString(), 
-                                               escudo_url = Dr["escudo_url"].ToString()
-                                             }
-                                  );
+                listaTimes.Add(new Times
+                {
+                    id = int.Parse(Dr["id"].ToString()),
+                    nome = Dr["nome"].ToString(),
+                    tipo = Dr["tipo"].ToString(),
+                    level = int.Parse(Dr["level"].ToString()),
+                    ataque = int.Parse(Dr["ataque"].ToString()),
+                    defesa = int.Parse(Dr["defesa"].ToString())
+                });
             }
 
             return true;
-
         }
-
-
-
-
-
-
-
-
-
-
     }
 }
